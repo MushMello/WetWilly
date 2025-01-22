@@ -422,7 +422,19 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      water_decorations_0: 1662528948125090130
+      water_decorations_1: -2281871235904147261
+      water_decorations_10: -9173418381181265264
+      water_decorations_11: 7916919868657064519
+      water_decorations_2: 5200533446574400257
+      water_decorations_3: -6769442441676537872
+      water_decorations_4: -7210764383587313099
+      water_decorations_5: 6168596595821847153
+      water_decorations_6: 9106963783223335321
+      water_decorations_7: -8760196151798671279
+      water_decorations_8: -9056396740359515898
+      water_decorations_9: -4528348935158386086
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // BF_PlayerHandler
 // handles the player movement in Building Fire
@@ -12,6 +13,7 @@ public class BF_PlayerHandler : MonoBehaviour
     [SerializeField] private float speed = 1f;
     [Header("References")]
     [SerializeField] private BF_GameHandler gameHandler;
+    [SerializeField] private InputActionReference movement;
 
     private Vector2 pendingVelocity = Vector2.zero;
     private Rigidbody2D rb;
@@ -25,7 +27,7 @@ public class BF_PlayerHandler : MonoBehaviour
     {
         if(gameHandler && gameHandler.Running)
         {
-            return new Vector2(Input.GetAxis("Horizontal"), 0);
+            return movement.action.ReadValue<Vector2>();
         }
         return Vector2.zero;
     }
