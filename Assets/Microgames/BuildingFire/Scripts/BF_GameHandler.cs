@@ -7,14 +7,26 @@ public class BF_GameHandler : MonoBehaviour
 {
     [Header("Game Settings")]
     [SerializeField] private int startingHealth = 3;
+    [SerializeField] private AudioClip[] damageSounds;
 
     private bool isRunning = true;
     private int points = 0;
     private int health;
+    private AudioSource audioSource;
 
     private void Start()
     {
         health = startingHealth;
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    private void PlayDamageSound()
+    {
+        if(audioSource)
+        {
+            audioSource.clip = damageSounds[Random.Range(0, damageSounds.Length)];
+            audioSource.Play();
+        }
     }
 
     public bool Running
@@ -49,6 +61,10 @@ public class BF_GameHandler : MonoBehaviour
         }
         set
         {
+            if(value < health)
+            {
+                PlayDamageSound();
+            }
             health = value;
             if(health <= 0)
             {

@@ -11,10 +11,11 @@ public class BF_TriggerHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if(gameHandler && collider.gameObject.GetComponent<BF_FireHandler>())
+        BF_FireHandler targetFire = collider.gameObject.GetComponent<BF_FireHandler>();
+        if (gameHandler && targetFire)
         {
             gameHandler.Health--;
-            Destroy(collider);
+            targetFire.StartScattering();
         }
     }
 }
