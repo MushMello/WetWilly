@@ -135,6 +135,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab0f46c37a93b7b42b4d6e4c802fb763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundChanceNormalized: 1
+  audioClips:
+  - {fileID: 8300000, guid: 18c0d059311a7eb4e951ae34455fae1a, type: 3}
+  - {fileID: 8300000, guid: 147958db1666fc74d84963a83565c964, type: 3}
+  - {fileID: 8300000, guid: 00c099762dc1bf646b4deea3ffac1dca, type: 3}
+  - {fileID: 8300000, guid: a35d409b43a512447bbdccc0cb36f809, type: 3}
+  - {fileID: 8300000, guid: 40f4b621257508e43ab2e617f4ad6350, type: 3}
 --- !u!50 &1815907813249769753
 Rigidbody2D:
   serializedVersion: 5

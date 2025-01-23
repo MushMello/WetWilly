@@ -6,16 +6,22 @@ using UnityEngine;
 
 public class BF_FireHandler : MonoBehaviour
 {
+    [Header("Fire Controls")]
+    [SerializeField] private float soundChanceNormalized;
+    [SerializeField] AudioClip[] audioClips;
+
     private int scatterScalar; // -1 for left, 1 for right, 0 for no scatter
     private Animator animator;
     private Rigidbody2D rb;
     private Collider2D col;
+    private AudioSource audioSource;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
+        audioSource = transform.parent.parent.GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -24,7 +30,18 @@ public class BF_FireHandler : MonoBehaviour
         if(targetPlayer)
         {
             targetPlayer.RegisterSave();
+            PlayDefeatSound();
             Destroy(gameObject);
+        }
+    }
+
+    public void PlayDefeatSound()
+    {
+        float soundChance = Mathf.Min(soundChanceNormalized, 1f);
+        if(Random.Range(0f,1f) < soundChance && audioSource && !audioSource.isPlaying)
+        {
+            audioSource.clip = audioClips[Random.Range(0,audioClips.Length)];
+            audioSource.Play();
         }
     }
 

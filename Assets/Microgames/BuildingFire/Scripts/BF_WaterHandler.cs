@@ -9,12 +9,14 @@ public class BF_WaterHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.GetComponent<BF_FireHandler>())
+        BF_FireHandler fireHandler = collision.GetComponent<BF_FireHandler>();
+        if(fireHandler)
         {
             if(sender)
             {
                 sender.RegisterSave();
             }
+            fireHandler.PlayDefeatSound();
             Destroy(collision.gameObject);
             if(despawnRoutine != null)
             {
