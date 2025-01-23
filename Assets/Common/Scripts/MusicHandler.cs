@@ -16,7 +16,7 @@ public class MusicHandler : MonoBehaviour
 
     private AudioSource audioSource;
 
-    private void Start()
+    private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         if(audioSource)
@@ -38,11 +38,33 @@ public class MusicHandler : MonoBehaviour
     {
         set
         {
-            musicClip = value;
-            audioSource.Stop();
-            audioSource.clip = musicClip;
-            audioSource.loop = true;
-            audioSource.Play();
+            if(audioSource)
+            {
+                musicClip = value;
+                audioSource.Stop();
+                audioSource.clip = musicClip;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
+        }
+    }
+
+    public float Volume
+    {
+        get
+        {
+            if(audioSource)
+            {
+                return audioSource.volume;
+            }
+            return 0f;
+        }
+        set
+        {
+            if(audioSource)
+            {
+                audioSource.volume = Mathf.Clamp(value, 0f, 1f);
+            }
         }
     }
 }

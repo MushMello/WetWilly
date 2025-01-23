@@ -40,6 +40,11 @@ public class BF_FireHandler : MonoBehaviour
         float soundChance = Mathf.Min(soundChanceNormalized, 1f);
         if(Random.Range(0f,1f) < soundChance && audioSource && !audioSource.isPlaying)
         {
+            SettingsHandler settings = SettingsHandler.GetSettingsHandler();
+            if(settings)
+            {
+                audioSource.volume = settings.MixedEffectVolume;
+            }
             audioSource.clip = audioClips[Random.Range(0,audioClips.Length)];
             audioSource.Play();
         }

@@ -24,6 +24,11 @@ public class BF_GameHandler : MonoBehaviour
     {
         if(audioSource)
         {
+            SettingsHandler settings = SettingsHandler.GetSettingsHandler();
+            if (settings)
+            {
+                audioSource.volume = settings.MixedEffectVolume;
+            }
             audioSource.clip = damageSounds[Random.Range(0, damageSounds.Length)];
             audioSource.Play();
         }
