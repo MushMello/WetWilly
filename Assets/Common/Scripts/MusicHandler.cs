@@ -5,6 +5,13 @@ public class MusicHandler : MonoBehaviour
     [Header("Music Controls")]
     [SerializeField] private AudioClip initialMusicClip;
 
+    private static MusicHandler musicHandler;
+
+    public static MusicHandler GetMusicHandler()
+    {
+        return musicHandler;
+    }    
+
     private AudioClip musicClip;
 
     private AudioSource audioSource;
@@ -22,6 +29,7 @@ public class MusicHandler : MonoBehaviour
                 audioSource.Play();
             }
         }
+        musicHandler = this;
         DontDestroyOnLoad(gameObject);
     }
 
