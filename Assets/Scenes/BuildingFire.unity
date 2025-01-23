@@ -505,8 +505,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  gameHandler: {fileID: 2097365247}
   movement: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  waterDelaySeconds: 1
+  gameHandler: {fileID: 2097365247}
+  fireAction: {fileID: -5576833936650490477, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  waterObject: {fileID: 2552088233594913248, guid: 89726bcb7433bf7458628705faa905f8, type: 3}
 --- !u!1 &946687504
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,7 +945,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 571637889673743805, guid: 6b2fa8574cdbf9a468938749583d5464, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

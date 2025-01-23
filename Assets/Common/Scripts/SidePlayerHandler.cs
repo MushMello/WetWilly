@@ -23,7 +23,7 @@ public class SidePlayerHandler : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    protected Vector2 GetInputVector()
+    public Vector2 GetInputVector()
     {
         return movement.action.ReadValue<Vector2>();
     }
