@@ -343,6 +343,14 @@ PrefabInstance:
       value: SettingsHandler
       objectReference: {fileID: 0}
     - target: {fileID: 5088696110581107706, guid: c749d86adf4eb0c4f9e35854b566e6c6, type: 3}
+      propertyPath: musicVolume
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5088696110581107706, guid: c749d86adf4eb0c4f9e35854b566e6c6, type: 3}
+      propertyPath: effectVolume
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5088696110581107706, guid: c749d86adf4eb0c4f9e35854b566e6c6, type: 3}
       propertyPath: musicHandler
       value: 
       objectReference: {fileID: 2069627533}
