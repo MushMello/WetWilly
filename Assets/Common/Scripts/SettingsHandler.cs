@@ -20,6 +20,7 @@ public class SettingsHandler : MonoBehaviour
     {
         settingsHandler = this;
         UpdateMusicVolume();
+        DontDestroyOnLoad(gameObject);
     }
 
     private void UpdateMusicVolume()

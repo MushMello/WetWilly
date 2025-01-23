@@ -8,6 +8,7 @@ public class BF_GameHandler : MonoBehaviour
     [Header("Game Settings")]
     [SerializeField] private int startingHealth = 3;
     [SerializeField] private AudioClip[] damageSounds;
+    [SerializeField] private AudioClip gameMusic;
 
     private bool isRunning = true;
     private int points = 0;
@@ -18,6 +19,11 @@ public class BF_GameHandler : MonoBehaviour
     {
         health = startingHealth;
         audioSource = GetComponent<AudioSource>();
+        MusicHandler musicHandler = MusicHandler.GetMusicHandler();
+        if(musicHandler)
+        {
+            musicHandler.MusicClip = gameMusic;
+        }
     }
 
     private void PlayDamageSound()
