@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -6,21 +5,19 @@ using UnityEngine.UI;
 public class SceneButtonHandler : MonoBehaviour
 {
     [Header("Button Settings")]
-    [SerializeField] private SceneAsset targetScene;
+    [SerializeField] private int sceneBuildNumber;
 
+    private Scene scene;
     private Button attachedButton;
 
     private void Start()
     {
-        if (targetScene != null)
+        attachedButton = GetComponent<Button>();
+        if (attachedButton)
         {
-            attachedButton = GetComponent<Button>();
-            if(attachedButton)
-            {
-                attachedButton.onClick.AddListener(() => {
-                    SceneManager.LoadSceneAsync(targetScene.name);
+            attachedButton.onClick.AddListener(() => {
+                SceneManager.LoadSceneAsync(sceneBuildNumber);
                 });
-            }
         }
     }
 }
