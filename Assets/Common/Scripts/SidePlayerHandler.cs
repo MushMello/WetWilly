@@ -11,16 +11,20 @@ public class SidePlayerHandler : MonoBehaviour
 
     [Header("Player Controls")]
     [SerializeField] private float speed = 1f;
+    [SerializeField] private bool spriteRightFacing = true;
+    [SerializeField] private bool handleSpriteFlip = true;
     [Header("References")]
     [SerializeField] private InputActionReference movement;
 
     private Vector2 pendingVelocity = Vector2.zero;
     private Rigidbody2D rb;
     private bool locked = false;
+    private SpriteRenderer spriteRenderer;
 
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     public Vector2 GetInputVector()
@@ -34,6 +38,17 @@ public class SidePlayerHandler : MonoBehaviour
         if (!locked && rb && inputVector != Vector2.zero)
         {
             pendingVelocity += (inputVector * speed * Time.deltaTime * internalSpeedMult);
+            if(spriteRenderer && handleSpriteFlip)
+            {
+                if(spriteRightFacing)
+                {
+                    spriteRenderer.flipX = inputVector.x < 0;
+                }
+                else
+                {
+                    spriteRenderer.flipX = inputVector.x > 0;
+                }
+            }
         }
     }
 

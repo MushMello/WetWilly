@@ -7,7 +7,7 @@ using UnityEngine;
 public class BF_FireHandler : MonoBehaviour
 {
     [Header("Fire Controls")]
-    [SerializeField] private float soundChanceNormalized;
+    [SerializeField][Range(0f,1f)] private float soundChanceNormalized;
     [SerializeField] AudioClip[] audioClips;
 
     private int scatterScalar; // -1 for left, 1 for right, 0 for no scatter
