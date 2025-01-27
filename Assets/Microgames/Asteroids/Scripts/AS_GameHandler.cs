@@ -19,7 +19,6 @@ public class AS_GameHandler : MonoBehaviour
 
     private Vector2 screenSize = Vector2.zero;
     private bool running = true;
-    private bool won = false;
     private int points = 0;
     private int currentRound = 0;
     private ArrayList currentAsteroids = new ArrayList();
@@ -87,8 +86,7 @@ public class AS_GameHandler : MonoBehaviour
         {
             if(currentRound == totalRounds)
             {
-                running = false;
-                won = true;
+                EndGame(true);
             }
             else
             {
@@ -198,8 +196,7 @@ public class AS_GameHandler : MonoBehaviour
         health--;
         if(health <= 0)
         {
-            running = false;
-            playerHandler.Locked = true;
+            EndGame(false);
         }
     }
 
@@ -212,6 +209,17 @@ public class AS_GameHandler : MonoBehaviour
         set
         {
             running = value;
+        }
+    }
+
+    private void EndGame(bool wonGame)
+    {
+        running = false;
+        playerHandler.Locked = true;
+        StateHandler state = StateHandler.GetStateHandler();
+        if(state)
+        {
+            state.WarpToScene(GameScene.Title, false);
         }
     }
 }

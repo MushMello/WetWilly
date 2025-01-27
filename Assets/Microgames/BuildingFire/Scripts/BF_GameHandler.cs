@@ -79,8 +79,18 @@ public class BF_GameHandler : MonoBehaviour
             health = value;
             if(health <= 0)
             {
-                Running = false;
+                EndGame(false);
             }
+        }
+    }
+
+    private void EndGame(bool playerWon)
+    {
+        Running = false;
+        StateHandler state = StateHandler.GetStateHandler();
+        if(state)
+        {
+            state.WarpToScene(GameScene.Title, false);
         }
     }
 }
