@@ -33,8 +33,12 @@ public class MusicHandler : MonoBehaviour
             }
         
             musicHandler = this;
+            DontDestroyOnLoad(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
+        else
+        {
+            musicHandler.MusicClip = initialMusicClip;
+        }
     }
 
 
