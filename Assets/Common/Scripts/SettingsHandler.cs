@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SettingsHandler : MonoBehaviour
 {
@@ -10,6 +11,12 @@ public class SettingsHandler : MonoBehaviour
     [SerializeField][Range(0f, 1f)] private float masterVolume = .75f;
     [Header("References")]
     [SerializeField] private MusicHandler musicHandler;
+    [SerializeField] private InputActionReference pauseAction;
+
+    private bool canPause = false;
+    private bool isPaused = false;
+    private bool hasUnpressedPause = true;
+    private GameObject pauseCanvas;
 
     public static SettingsHandler GetSettingsHandler()
     {
@@ -20,7 +27,30 @@ public class SettingsHandler : MonoBehaviour
     {
         settingsHandler = this;
         UpdateMusicVolume();
+        pauseCanvas = transform.Find("PauseCanvas").gameObject;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        if(hasUnpressedPause && pauseAction && pauseCanvas && pauseAction.action.WasPressedThisFrame() && canPause)
+        {
+            isPaused = !isPaused;
+            if(isPaused)
+            {
+                Time.timeScale = 0f;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+            }
+            hasUnpressedPause = false;
+            pauseCanvas.SetActive(isPaused);
+        }
+        if(pauseAction && pauseAction.action.WasReleasedThisFrame())
+        {
+            hasUnpressedPause = true;
+        }
     }
 
     private void UpdateMusicVolume()
@@ -81,6 +111,14 @@ public class SettingsHandler : MonoBehaviour
         get
         {
             return effectVolume * masterVolume;
+        }
+    }
+
+    public bool CanPause
+    {
+        set
+        {
+            canPause = value;
         }
     }
 }

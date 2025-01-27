@@ -16,6 +16,11 @@ public class SceneButtonHandler : MonoBehaviour
         if (attachedButton)
         {
             attachedButton.onClick.AddListener(() => {
+                SettingsHandler settings = SettingsHandler.GetSettingsHandler();
+                if(settings)
+                {
+                    settings.CanPause = true;
+                }
                 SceneManager.LoadSceneAsync(sceneBuildNumber);
                 });
         }
