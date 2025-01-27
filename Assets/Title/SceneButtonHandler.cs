@@ -6,23 +6,25 @@ public class SceneButtonHandler : MonoBehaviour
 {
     [Header("Button Settings")]
     [SerializeField] private int sceneBuildNumber;
+    [SerializeField] private bool allowPauseAfterLoad = true;
 
     private Scene scene;
     private Button attachedButton;
+    
 
-    private void Start()
+    protected virtual void Start()
     {
         attachedButton = GetComponent<Button>();
         if (attachedButton)
         {
             attachedButton.onClick.AddListener(() => {
+                SceneManager.LoadSceneAsync(sceneBuildNumber);
                 SettingsHandler settings = SettingsHandler.GetSettingsHandler();
                 if(settings)
                 {
-                    settings.CanPause = true;
+                    settings.CanPause = allowPauseAfterLoad;
                 }
-                SceneManager.LoadSceneAsync(sceneBuildNumber);
-                });
+            });
         }
     }
 }

@@ -1060,6 +1060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneBuildNumber: 1
+  allowPauseAfterLoad: 1
 --- !u!1 &1312906157
 GameObject:
   m_ObjectHideFlags: 0
@@ -1195,6 +1196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneBuildNumber: 2
+  allowPauseAfterLoad: 1
 --- !u!1 &1497632719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1773,6 +1775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneBuildNumber: 3
+  allowPauseAfterLoad: 1
 --- !u!1 &2024667125
 GameObject:
   m_ObjectHideFlags: 0

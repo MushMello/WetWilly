@@ -18,18 +18,22 @@ public class MusicHandler : MonoBehaviour
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        if(audioSource)
+        if (!musicHandler)
         {
-            musicClip = initialMusicClip;
-            if(musicClip)
+            audioSource = GetComponent<AudioSource>();
+            if(audioSource)
             {
-                audioSource.clip = musicClip;
-                audioSource.loop = true;
-                audioSource.Play();
+                musicClip = initialMusicClip;
+                if(musicClip)
+                {
+                    audioSource.clip = musicClip;
+                    audioSource.loop = true;
+                    audioSource.Play();
+                }
             }
+        
+            musicHandler = this;
         }
-        musicHandler = this;
         DontDestroyOnLoad(gameObject);
     }
 

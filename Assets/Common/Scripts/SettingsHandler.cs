@@ -19,29 +19,24 @@ public class SettingsHandler : MonoBehaviour
     private bool isPaused = false;
     private bool hasUnpressedPause = true;
     private GameObject pauseCanvas;
-    private Button exitButton;
 
     public static SettingsHandler GetSettingsHandler()
     {
         return settingsHandler;
     }
 
-    private void Start()
+    private void Awake()
     {
-        settingsHandler = this;
-        UpdateMusicVolume();
-        pauseCanvas = transform.Find("PauseCanvas").gameObject;
-        GameObject pausePanel = pauseCanvas.transform.Find("PausePanel").gameObject;
-        if(pausePanel)
+        if (!settingsHandler)
         {
-            GameObject exitBtnObj = pausePanel.transform.Find("ExitButton").gameObject;
-            if(exitBtnObj)
-            {
-                exitButton = exitBtnObj.GetComponent<Button>();
-            }
+            settingsHandler = this;
+            UpdateMusicVolume();
+            pauseCanvas = transform.Find("PauseCanvas").gameObject;
+            DontDestroyOnLoad(gameObject);
+            GameObject pausePanel = pauseCanvas.transform.Find("PausePanel").gameObject;
         }
-        DontDestroyOnLoad(gameObject);
     }
+
 
     private void Update()
     {
@@ -50,16 +45,6 @@ public class SettingsHandler : MonoBehaviour
             isPaused = !isPaused;
             if(isPaused)
             {
-                if(exitButton)
-                {
-                    exitButton.onClick.RemoveAllListeners();
-                    exitButton.onClick.AddListener(() => {
-                        Time.timeScale = 1f;
-                        isPaused = false;
-                        pauseCanvas.SetActive(false);
-                        SceneManager.LoadSceneAsync(0);
-                    });
-                }
                 Time.timeScale = 0f;
             }
             else
