@@ -165,12 +165,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef2d4f8c4b67e24f8d9f2f83d242499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraSize: 5
+  cameraSize: 7.5
   targetResolution: {x: 1920, y: 1080}
-  health: 30
+  health: 3
   totalRounds: 3
   initialSpawnCount: 5
   spawnCountAdditive: 2
+  safeZoneSpace: 3
   starField: {fileID: 1168499746}
   gameMusic: {fileID: 8300000, guid: 85683ab1b3cd883438dabccd976d79ef, type: 3}
   playerHandler: {fileID: 1661103513}
@@ -297,12 +298,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 4334783836991956000, guid: 8f9e544a3d0b9cf46a5a4c2536f3d4bc, type: 3}
+  m_Sprite: {fileID: -2106743293, guid: 2065c831a25694e44b72ac77fa7ca39b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.14, y: 0.16}
+  m_Size: {x: 1.1445312, y: 1.000082}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -320,6 +321,7 @@ GameObject:
   - component: {fileID: 1661103513}
   - component: {fileID: 1661103511}
   - component: {fileID: 1661103512}
+  - component: {fileID: 1661103514}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -337,7 +339,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1626058588}
@@ -377,7 +379,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.05}
+  m_Offset: {x: 0, y: 0.05}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -387,7 +389,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.125, y: 1.4}
+  m_Size: {x: 1.5, y: 1.35}
   m_EdgeRadius: 0
 --- !u!50 &1661103512
 Rigidbody2D:
@@ -429,7 +431,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.5
+  rotatePlayer: 0
   movement: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  fireRateSeconds: 1
+  fireAction: {fileID: -5576833936650490477, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  bulletObject: {fileID: 7677662194577826342, guid: 7d6e3b1c91217c043a9a7ecd8b8127d4, type: 3}
+--- !u!95 &1661103514
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661103509}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6c10549ee53ec0449a82b215d55f645f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1955897842
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,7 +520,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

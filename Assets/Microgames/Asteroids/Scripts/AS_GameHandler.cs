@@ -10,6 +10,7 @@ public class AS_GameHandler : MonoBehaviour
     [SerializeField] private int totalRounds = 3;
     [SerializeField] private int initialSpawnCount = 5;
     [SerializeField] private int spawnCountAdditive = 2;
+    [SerializeField] private float safeZoneSpace = 3f;
     [Header("References")]
     [SerializeField] private GameObject starField;
     [SerializeField] private AudioClip gameMusic;
@@ -116,31 +117,55 @@ public class AS_GameHandler : MonoBehaviour
         }
     }
 
-    private void SpawnAsteroid(AsteroidType asteroidType)
+    private float GetFloatOutsideOfRange(float n, float min, float max)
+    {
+        if(n >= min && n <= max)
+        {
+            if(n - min > max - n)
+            {
+                return max;
+            }
+            return min;
+        }
+        return n;
+    }
+
+    public void SpawnAsteroid(AsteroidType asteroidType)
+    {
+        SpawnAsteroidAtPosition(asteroidType, new Vector2(Random.Range(screenSize.x * -1, screenSize.x), Random.Range(screenSize.y * -1, screenSize.y)));
+    }
+
+    public void SpawnAsteroidAtPosition(AsteroidType desiredType, Vector2 position)
     {
         ArrayList eligibleAsteroids = new ArrayList();
-        foreach(GameObject eachObject in asteroidPrefabs)
+        foreach (GameObject eachObject in asteroidPrefabs)
         {
             AS_AsteroidHandler eachAsteroid = eachObject.GetComponent<AS_AsteroidHandler>();
-            if(eachAsteroid && eachAsteroid.AsteroidType == asteroidType)
+            if (eachAsteroid && eachAsteroid.AsteroidType == desiredType)
             {
                 eligibleAsteroids.Add(eachObject);
             }
         }
-        if(eligibleAsteroids.Count == 0)
+        if (eligibleAsteroids.Count == 0)
         {
             return;
         }
 
         GameObject asteroidClone = Instantiate((GameObject)eligibleAsteroids[Random.Range(0, eligibleAsteroids.Count)], starField.transform);
         AS_AsteroidHandler newAsteroid = asteroidClone.GetComponent<AS_AsteroidHandler>();
-        if(newAsteroid)
+        if (newAsteroid)
         {
             newAsteroid.RegisterGameHandler(this);
             currentAsteroids.Add(newAsteroid);
         }
 
-        asteroidClone.transform.localPosition = new Vector3(Random.Range(screenSize.x * -1, screenSize.x), Random.Range(screenSize.y * -1, screenSize.y), 0);
+        Vector3 pendingPos = new Vector3(position.x, position.y, 0);
+        if (playerHandler)
+        {
+            pendingPos.x = GetFloatOutsideOfRange(pendingPos.x, playerHandler.transform.position.x + safeZoneSpace * -1, playerHandler.transform.position.x + safeZoneSpace);
+            pendingPos.y = GetFloatOutsideOfRange(pendingPos.y, playerHandler.transform.position.y + safeZoneSpace * -1, playerHandler.transform.position.y + safeZoneSpace);
+        }
+        asteroidClone.transform.localPosition = pendingPos;
     }
     
     public void RemoveAsteroid(AS_AsteroidHandler targetAsteroid)

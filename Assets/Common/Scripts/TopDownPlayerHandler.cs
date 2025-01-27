@@ -7,6 +7,7 @@ public class TopDownPlayerHandler : MonoBehaviour
 
     [Header("Player Controls")]
     [SerializeField] private float speed = 1f;
+    [SerializeField] private bool rotatePlayer = true;
     [Header("References")]
     [SerializeField] private InputActionReference movement;
 
@@ -25,7 +26,7 @@ public class TopDownPlayerHandler : MonoBehaviour
         {
             Vector2 inputVector = GetInputVector();
             pendingVelocity += (inputVector * speed * Time.deltaTime * internalSpeedMult);
-            if(inputVector != Vector2.zero)
+            if(rotatePlayer && inputVector != Vector2.zero)
             {
                 transform.up = new Vector3(inputVector.x, inputVector.y, 0f);
             }

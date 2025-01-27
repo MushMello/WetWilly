@@ -40,11 +40,7 @@ public class AS_AsteroidHandler : MonoBehaviour
         if (targetPlayer)
         {
             targetPlayer.Hit();
-            if(gameHandler)
-            {
-                gameHandler.RemoveAsteroid(this);
-            }
-            Destroy(gameObject);
+            Hit();
         }
     }
 
@@ -54,5 +50,24 @@ public class AS_AsteroidHandler : MonoBehaviour
         {
             return asteroidType;
         }
+    }
+
+    public void Hit()
+    {
+        if (gameHandler)
+        {
+            if(asteroidType == AsteroidType.Large)
+            {
+                gameHandler.SpawnAsteroidAtPosition(AsteroidType.Medium, new Vector2(transform.position.x, transform.position.y));
+                gameHandler.SpawnAsteroidAtPosition(AsteroidType.Medium, new Vector2(transform.position.x, transform.position.y));
+            }
+            else if (asteroidType == AsteroidType.Medium)
+            {
+                gameHandler.SpawnAsteroidAtPosition(AsteroidType.Small, new Vector2(transform.position.x, transform.position.y));
+                gameHandler.SpawnAsteroidAtPosition(AsteroidType.Small, new Vector2(transform.position.x, transform.position.y));
+            }
+            gameHandler.RemoveAsteroid(this);
+        }
+        Destroy(gameObject);
     }
 }
