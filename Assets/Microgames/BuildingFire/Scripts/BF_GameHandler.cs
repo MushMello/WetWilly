@@ -21,12 +21,12 @@ public class BF_GameHandler : MonoBehaviour
         health = startingHealth;
         audioSource = GetComponent<AudioSource>();
         MusicHandler musicHandler = MusicHandler.GetMusicHandler();
-        if(musicHandler)
+        if (musicHandler)
         {
             musicHandler.MusicClip = gameMusic;
         }
         state = StateHandler.GetStateHandler();
-        if(state)
+        if (state)
         {
             state.DisplayScoreValue(0);
         }
@@ -34,7 +34,7 @@ public class BF_GameHandler : MonoBehaviour
 
     private void PlayDamageSound()
     {
-        if(audioSource)
+        if (audioSource)
         {
             SettingsHandler settings = SettingsHandler.GetSettingsHandler();
             if (settings)
@@ -79,12 +79,12 @@ public class BF_GameHandler : MonoBehaviour
         }
         set
         {
-            if(value < health)
+            if (value < health)
             {
                 PlayDamageSound();
             }
             health = value;
-            if(health <= 0)
+            if (health <= 0)
             {
                 EndGame(false);
             }
@@ -94,10 +94,10 @@ public class BF_GameHandler : MonoBehaviour
     private void EndGame(bool playerWon)
     {
         Running = false;
-        if(state)
+        if (state)
         {
             state.Points += points;
-            state.WarpToScene(GameScene.Title, false);
+            state.DisplayAnnouncementAndWarp(playerWon, GameScene.Title, false);
         }
     }
 }

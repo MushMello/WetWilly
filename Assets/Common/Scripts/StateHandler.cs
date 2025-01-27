@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -15,6 +16,8 @@ public class StateHandler : MonoBehaviour
 {
     private static StateHandler stateHandler;
 
+    [Header("StateHandler Settings")]
+    [SerializeField] private float announcementDelay = 2f;
 
     private int points = 0;
     private GameScene currentScene = GameScene.Title;
@@ -90,5 +93,72 @@ public class StateHandler : MonoBehaviour
         {
             return currentScene;
         }
+    }
+
+    private GameObject StatePanel
+    {
+        get
+        {
+            GameObject stateCanvas = transform.Find("StateCanvas").gameObject;
+            if (stateCanvas)
+            {
+                GameObject statePanel = stateCanvas.transform.Find("StatePanel").gameObject;
+                return statePanel;
+            }
+            return null;
+        }
+    }
+
+    private void ToggleWinLabel()
+    {
+        GameObject statePanel = StatePanel;
+        if (statePanel)
+        {
+            GameObject winLblObj = statePanel.transform.Find("WinLabel").gameObject;
+            if (winLblObj)
+            {
+                winLblObj.SetActive(!winLblObj.activeSelf);
+            }
+        }
+    }
+
+    private void ToggleLoseLabel()
+    {
+        GameObject statePanel = StatePanel;
+        if (statePanel)
+        {
+            GameObject loseLblObj = statePanel.transform.Find("LoseLabel").gameObject;
+            if (loseLblObj)
+            {
+                loseLblObj.SetActive(!loseLblObj.activeSelf);
+            }
+        }
+    }
+
+    private IEnumerator GetAnnouncementRoutine(bool won, GameScene targetScene, bool allowPause)
+    {
+        if(won)
+        {
+            ToggleWinLabel();
+        }
+        else
+        {
+            ToggleLoseLabel();
+        }
+        yield return new WaitForSeconds(announcementDelay);
+        if (won)
+        {
+            ToggleWinLabel();
+        }
+        else
+        {
+            ToggleLoseLabel();
+        }
+        WarpToScene(targetScene, allowPause);
+    }
+
+    public void DisplayAnnouncementAndWarp(bool wonGame, GameScene targetScene, bool allowPause)
+    {
+        StartCoroutine(GetAnnouncementRoutine(wonGame, targetScene, allowPause));
     }
 }
