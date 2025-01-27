@@ -76,7 +76,7 @@ public class StateHandler : MonoBehaviour
         }
     }
 
-    public void WarpToScene(GameScene targetScene, bool allowPause)
+    private void WarpToScene(GameScene targetScene, bool allowPause)
     {
         currentScene = targetScene;
         SettingsHandler settings = SettingsHandler.GetSettingsHandler();
