@@ -9,15 +9,18 @@ public class AS_PlayerHandler : TopDownPlayerHandler
     [Header("Game References")]
     [SerializeField] private InputActionReference fireAction;
     [SerializeField] private GameObject bulletObject;
+    [SerializeField] private AudioClip damageSound;
     
     private AS_GameHandler gameHandler;
     private float fireTimer = 0f;
     private Coroutine fireTimerRoutine;
     private Vector2 lastDirection;
+    private AudioSource audioSource;
 
     protected override void Start()
     {
         base.Start();
+        audioSource = GetComponent<AudioSource>();
         fireTimerRoutine = StartCoroutine(GetTimerRoutine());
         lastDirection = new Vector2(transform.up.x, transform.up.y);
     }
@@ -71,6 +74,16 @@ public class AS_PlayerHandler : TopDownPlayerHandler
         if(gameHandler)
         {
             gameHandler.RegisterDamage();
+        }
+        if(audioSource && damageSound && !audioSource.isPlaying)
+        {
+            SettingsHandler settings = SettingsHandler.GetSettingsHandler();
+            if(settings)
+            {
+                audioSource.volume = settings.MixedEffectVolume;
+            }
+            audioSource.clip = damageSound;
+            audioSource.Play();
         }
     }
 
