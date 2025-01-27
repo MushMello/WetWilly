@@ -21,6 +21,7 @@ public class StateHandler : MonoBehaviour
 
     private int points = 0;
     private GameScene currentScene = GameScene.Title;
+    private bool announcementRunning = false;
 
     public static StateHandler GetStateHandler()
     {
@@ -76,7 +77,7 @@ public class StateHandler : MonoBehaviour
         }
     }
 
-    private void WarpToScene(GameScene targetScene, bool allowPause)
+    public void WarpToScene(GameScene targetScene, bool allowPause)
     {
         currentScene = targetScene;
         SettingsHandler settings = SettingsHandler.GetSettingsHandler();
@@ -137,6 +138,7 @@ public class StateHandler : MonoBehaviour
 
     private IEnumerator GetAnnouncementRoutine(bool won, GameScene targetScene, bool allowPause)
     {
+        announcementRunning = true;
         if(won)
         {
             ToggleWinLabel();
@@ -155,10 +157,14 @@ public class StateHandler : MonoBehaviour
             ToggleLoseLabel();
         }
         WarpToScene(targetScene, allowPause);
+        announcementRunning = false;
     }
 
     public void DisplayAnnouncementAndWarp(bool wonGame, GameScene targetScene, bool allowPause)
     {
-        StartCoroutine(GetAnnouncementRoutine(wonGame, targetScene, allowPause));
+        if(!announcementRunning)
+        {
+            StartCoroutine(GetAnnouncementRoutine(wonGame, targetScene, allowPause));
+        }
     }
 }
