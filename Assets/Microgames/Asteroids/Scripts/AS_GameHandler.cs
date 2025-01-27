@@ -22,6 +22,7 @@ public class AS_GameHandler : MonoBehaviour
     private int points = 0;
     private int currentRound = 0;
     private ArrayList currentAsteroids = new ArrayList();
+    private StateHandler state;
 
     private void Awake()
     {
@@ -53,6 +54,12 @@ public class AS_GameHandler : MonoBehaviour
             {
                 musicHandler.MusicClip = gameMusic;
             }
+        }
+
+        state = StateHandler.GetStateHandler();
+        if(state)
+        {
+            state.DisplayScoreValue(0);
         }
     }
 
@@ -188,6 +195,10 @@ public class AS_GameHandler : MonoBehaviour
         set
         {
             points = value;
+            if(state)
+            {
+                state.DisplayScoreValue(points);
+            }
         }
     }
 
@@ -216,9 +227,9 @@ public class AS_GameHandler : MonoBehaviour
     {
         running = false;
         playerHandler.Locked = true;
-        StateHandler state = StateHandler.GetStateHandler();
         if(state)
         {
+            state.Points += points;
             state.WarpToScene(GameScene.Title, false);
         }
     }

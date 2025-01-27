@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public enum GameScene
 {
@@ -27,7 +29,34 @@ public class StateHandler : MonoBehaviour
         if(!stateHandler)
         {
             stateHandler = this;
+            SetScoreLabel();
             DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    private void SetScoreLabel()
+    {
+        DisplayScoreValue(Points);
+    }
+
+    public void DisplayScoreValue(int score)
+    {
+        GameObject stateCanvas = transform.Find("StateCanvas").gameObject;
+        if (stateCanvas)
+        {
+            GameObject statePanel = stateCanvas.transform.Find("StatePanel").gameObject;
+            if (statePanel)
+            {
+                GameObject scoreLblObj = statePanel.transform.Find("ScoreLabel").gameObject;
+                if (scoreLblObj)
+                {
+                    Text scoreLabel = scoreLblObj.GetComponent<Text>();
+                    if (scoreLabel)
+                    {
+                        scoreLabel.text = string.Format("Score: {0:D}", score);
+                    }
+                }
+            }
         }
     }
 
@@ -40,6 +69,7 @@ public class StateHandler : MonoBehaviour
         set
         {
             points = value;
+            SetScoreLabel();
         }
     }
 

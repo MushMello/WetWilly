@@ -14,6 +14,7 @@ public class BF_GameHandler : MonoBehaviour
     private int points = 0;
     private int health;
     private AudioSource audioSource;
+    private StateHandler state;
 
     private void Start()
     {
@@ -23,6 +24,11 @@ public class BF_GameHandler : MonoBehaviour
         if(musicHandler)
         {
             musicHandler.MusicClip = gameMusic;
+        }
+        state = StateHandler.GetStateHandler();
+        if(state)
+        {
+            state.DisplayScoreValue(0);
         }
     }
 
@@ -61,6 +67,7 @@ public class BF_GameHandler : MonoBehaviour
         set
         {
             points = value;
+            state.DisplayScoreValue(points);
         }
     }
 
@@ -87,9 +94,9 @@ public class BF_GameHandler : MonoBehaviour
     private void EndGame(bool playerWon)
     {
         Running = false;
-        StateHandler state = StateHandler.GetStateHandler();
         if(state)
         {
+            state.Points += points;
             state.WarpToScene(GameScene.Title, false);
         }
     }
