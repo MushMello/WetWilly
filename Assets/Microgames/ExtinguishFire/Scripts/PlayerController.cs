@@ -32,6 +32,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private InputActionReference movement, attack;
 
+    public bool useStopwatch = true;
+    public bool lockY = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -83,6 +86,11 @@ public class PlayerController : MonoBehaviour
         {
             spriteRenderer.flipX = false;
         }
+
+        if(useStopwatch && stopwatch.ElapsedMilliseconds > 3000)
+        {
+            StartAttack();
+        }
     }
 
     void OnMove(InputValue movementValue)
@@ -92,6 +100,10 @@ public class PlayerController : MonoBehaviour
 
     private bool TryMove(Vector2 direction)
     {
+        if (lockY && direction.y != 0) {
+            direction.y = 0;
+        }
+
         if (direction != Vector2.zero)
         {
             int count = rb.Cast(direction, movementFilter, castCollisions, moveSpeed * Time.fixedDeltaTime + collisionOffset);
@@ -121,6 +133,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isInhaling)
         {
+            isInhaling = false;
             UnityEngine.Debug.Log("StartAttack triggered");
             stopwatch.Stop();
 
@@ -129,8 +142,7 @@ public class PlayerController : MonoBehaviour
             } else {
                 attackTime = stopwatch.ElapsedMilliseconds / 1000f;
             }
-
-            isInhaling = false;
+            
             animator.SetTrigger("water");
             LockMovement();
 
