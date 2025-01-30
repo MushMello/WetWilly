@@ -10,7 +10,8 @@ public enum GameScene
     ExtinguishFire = 1,
     BuildingFire = 2,
     Asteroids = 3,
-    Overworld = 4
+    Overworld = 4,
+    Pong = 5
 };
 
 public class StateHandler : MonoBehaviour

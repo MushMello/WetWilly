@@ -13,6 +13,14 @@ public class OW_PlayerHandler : TopDownPlayerHandler
     {
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        OverworldHandler oh = OverworldHandler.GetOverworldHandler();
+        if(oh)
+        {
+            if(oh.StoredPlayerPosition != Vector2.zero)
+            {
+                transform.position = oh.StoredPlayerPosition;
+            }
+        }
     }
 
     protected override void Update()
@@ -29,7 +37,7 @@ public class OW_PlayerHandler : TopDownPlayerHandler
     {
         get
         {
-            return new Vector2(transform.localPosition.x, transform.localPosition.y);
+            return new Vector2(transform.position.x, transform.position.y);
         }
     }
 }

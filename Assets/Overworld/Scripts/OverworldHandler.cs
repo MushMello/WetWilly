@@ -9,12 +9,19 @@ public class OverworldHandler : MonoBehaviour
 
     [Header("Instance Settings")]
     [SerializeField] private OW_PlayerHandler player;
+    [SerializeField] private AudioClip music;
     
     
     private Vector2 storedPlayerPosition = Vector2.zero;
 
     private void Awake()
     {
+        MusicHandler musicHandler = MusicHandler.GetMusicHandler();
+        if(musicHandler && music)
+        {
+            musicHandler.MusicClip = music;
+        }
+
         if(!overworldHandler)
         {
             DontDestroyOnLoad(gameObject);
@@ -24,7 +31,7 @@ public class OverworldHandler : MonoBehaviour
         {
             if(player)
             {
-                player.transform.localPosition = new Vector3(storedPlayerPosition.x, storedPlayerPosition.y, 0);
+                player.transform.position = new Vector3(storedPlayerPosition.x, storedPlayerPosition.y, 0);
             }
         }
     }

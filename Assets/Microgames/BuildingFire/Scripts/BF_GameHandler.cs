@@ -91,13 +91,13 @@ public class BF_GameHandler : MonoBehaviour
         }
     }
 
-    private void EndGame(bool playerWon)
+    public void EndGame(bool playerWon)
     {
         Running = false;
         if (state)
         {
             state.Points += points;
-            state.DisplayAnnouncementAndWarp(playerWon, GameScene.Title, false);
+            state.DisplayAnnouncementAndWarp(playerWon, GameScene.Overworld, false);
         }
     }
 }

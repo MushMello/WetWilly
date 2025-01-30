@@ -9,11 +9,14 @@ public class BF_WindowHandler : MonoBehaviour
     [Header("Window Settings")]
     [SerializeField] private float spawnDelay = 3; // refers to the spawn rate of falling objects in seconds
     [SerializeField] private GameObject fireObject; // the object to fall from the window
+    [SerializeField] private float secondsToWin = 60;
     [Header("References")]
     [SerializeField] private BF_GameHandler gameHandler;
 
     private Transform[] spawnTransforms;
     private Coroutine spawnRoutine;
+    private Coroutine timerRoutine;
+    private bool running = true;
     
 
     private void Start()
@@ -25,6 +28,7 @@ public class BF_WindowHandler : MonoBehaviour
             spawnTransforms[i++] = eachTransform;
         }
         spawnRoutine = StartCoroutine(GetSpawnRoutine());
+        timerRoutine = StartCoroutine(GetTimerRoutine());
     }
 
     private void SpawnFire()
@@ -42,6 +46,15 @@ public class BF_WindowHandler : MonoBehaviour
         }
     }
 
+    private IEnumerator GetTimerRoutine()
+    {
+        yield return new WaitForSeconds(secondsToWin);
+        if(running)
+        {
+            transform.parent.parent.GetComponent<BF_GameHandler>().EndGame(true); // do not judge me hella time crunch code
+        }
+    }
+
     public float SpawnDelay
     {
         get
@@ -56,9 +69,14 @@ public class BF_WindowHandler : MonoBehaviour
 
     public void EndSpawns()
     {
+        running = false;
         if(spawnRoutine != null)
         {
             StopCoroutine(spawnRoutine);
+        }
+        if(timerRoutine != null)
+        {
+            StopCoroutine(timerRoutine);
         }
     }
 }

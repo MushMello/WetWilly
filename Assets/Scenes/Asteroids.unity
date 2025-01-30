@@ -169,7 +169,7 @@ MonoBehaviour:
   targetResolution: {x: 1920, y: 1080}
   health: 3
   totalRounds: 3
-  initialSpawnCount: 5
+  initialSpawnCount: 3
   spawnCountAdditive: 2
   safeZoneSpace: 3
   starField: {fileID: 1168499746}
