@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Overworld.unity
     guid: 6e90e50fd523f6c44bbe6017106c3a84
+  - enabled: 1
+    path: Assets/Microgames/Pong/Main.unity
+    guid: 98726d706541e294193e2879a435987e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
