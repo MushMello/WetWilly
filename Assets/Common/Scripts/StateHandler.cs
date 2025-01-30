@@ -18,7 +18,7 @@ public class StateHandler : MonoBehaviour
 {
     private static StateHandler stateHandler;
 
-    [Header("StateHandler Settings")]
+    [Header("StateHandler Settings")] 
     [SerializeField] private float announcementDelay = 2f;
 
     private int points = 0;
