@@ -24,4 +24,12 @@ public class OW_PlayerHandler : TopDownPlayerHandler
             spriteRenderer.flipX = flipSprite && ((facingRight && xScalar < 0) || (!facingRight && xScalar > 0));
         }
     }
+
+    public Vector2 Position
+    {
+        get
+        {
+            return new Vector2(transform.localPosition.x, transform.localPosition.y);
+        }
+    }
 }

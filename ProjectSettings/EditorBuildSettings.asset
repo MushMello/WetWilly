@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Asteroids.unity
     guid: 07d07fb1d2db2284b847e07e267e422f
+  - enabled: 1
+    path: Assets/Scenes/Overworld.unity
+    guid: 6e90e50fd523f6c44bbe6017106c3a84
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

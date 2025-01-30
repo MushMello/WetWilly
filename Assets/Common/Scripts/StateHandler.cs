@@ -9,7 +9,8 @@ public enum GameScene
     Title = 0,
     ExtinguishFire = 1,
     BuildingFire = 2,
-    Asteroids = 3
+    Asteroids = 3,
+    Overworld = 4
 };
 
 public class StateHandler : MonoBehaviour
