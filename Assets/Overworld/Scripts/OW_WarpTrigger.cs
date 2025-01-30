@@ -12,7 +12,7 @@ public class OW_WarpTrigger : MonoBehaviour
 
     private bool warpEnabled;
 
-    private void Start()
+    protected virtual void Start()
     {
         OverworldHandler oh = OverworldHandler.GetOverworldHandler();
         if(oh)
@@ -29,7 +29,7 @@ public class OW_WarpTrigger : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         OW_PlayerHandler targetPlayer = collision.GetComponent<OW_PlayerHandler>();
         StateHandler state = StateHandler.GetStateHandler();

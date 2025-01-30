@@ -230,7 +230,7 @@ public class AS_GameHandler : MonoBehaviour
         if(state)
         {
             state.Points += points;
-            state.DisplayAnnouncementAndWarp(wonGame, GameScene.Overworld, false);
+            state.DisplayAnnouncementAndWarp(wonGame, GameScene.Pong, false);
         }
     }
 }

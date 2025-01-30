@@ -269,7 +269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1254030118}
   - component: {fileID: 1254030120}
-  - component: {fileID: 1254030119}
+  - component: {fileID: 1254030121}
   m_Layer: 0
   m_Name: AS_WarpTrigger
   m_TagString: Untagged
@@ -292,21 +292,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1529761336}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1254030119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1254030117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 790b198b32f71424a8d3160c417eb98a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  disableOnUse: 1
-  warpName: asteroids
-  targetScene: 3
 --- !u!61 &1254030120
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -353,6 +338,24 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1254030121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254030117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e069f7f10dc47de4ca0dd76fad44e09a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disableOnUse: 1
+  warpName: asteroids
+  targetScene: 3
+  dependentWarpIDs:
+  - building
+  - extinguish
 --- !u!1 &1346685698
 GameObject:
   m_ObjectHideFlags: 0
