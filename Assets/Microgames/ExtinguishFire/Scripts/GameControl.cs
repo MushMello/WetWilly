@@ -7,7 +7,7 @@ public class GameControl : MonoBehaviour
     public int fireHazardLevel = 1;
 
     [SerializeField]
-    private int fireHazardModifier = 1000;
+    private float fireHazardModifier = .5f;
 
     GameObject fireObjects;
     List<GameObject> fireList = new List<GameObject>();
@@ -25,14 +25,39 @@ public class GameControl : MonoBehaviour
         
     }
 
+    private bool hasLost = false;
+
+    private void CheckFires()
+    {
+        int fireCount = 0;
+        foreach(GameObject eachObject in fireList)
+        {
+            if(eachObject.activeSelf)
+            {
+                fireCount++;
+            }
+        }
+
+        if(fireCount >= 4)
+        {
+            StateHandler state = StateHandler.GetStateHandler();
+            if(state && !hasLost)
+            {
+                hasLost = true;
+                state.DisplayAnnouncementAndWarp(false, GameScene.Overworld, true);
+            }
+        }
+    }
+
     bool firstSuccessfulGen = false;
 
     void Update()
     {
-        if (Random.Range(0, fireHazardModifier/fireHazardLevel) == Random.Range(0, fireHazardModifier/fireHazardLevel)) {
-            fireList[Random.Range(1,fireList.Count)].SetActive(true);
-            //TODO: Find better way to control randomness of fire for each level
-            if (firstSuccessfulGen) fireHazardModifier = fireHazardModifier * 5;
+        if(Random.value < fireHazardModifier || !firstSuccessfulGen)
+        {
+            fireList[Random.Range(0, fireList.Count)].SetActive(true);
+            firstSuccessfulGen = true;
         }
+        CheckFires();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Diagnostics;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,14 +27,16 @@ public class PlayerController : MonoBehaviour
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
 
     Animator animator;
+    private int localScore = 0;
 
     bool canMove = true;
 
-    [SerializeField]
-    private InputActionReference movement, attack;
+    [SerializeField] private InputActionReference movement;
+    [SerializeField] private InputActionReference attack;
 
     public bool useStopwatch = true;
     public bool lockY = false;
+    Collider2D selfCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -42,12 +45,30 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        selfCollider = GetComponent<Collider2D>();
 
-        attack.action.started += ctx => StartInhale();
-        attack.action.canceled += ctx => StartAttack();
+        //attack.action.started += ctx => StartInhale();
+        //attack.action.canceled += ctx => StartAttack();
 
         stopwatch = new Stopwatch();
         
+    }
+
+    private int LocalScore
+    {
+        get
+        {
+            return localScore;
+        }
+        set
+        {
+            localScore = value;
+            StateHandler state = StateHandler.GetStateHandler();
+            if(state)
+            {
+                state.DisplayScoreValue(localScore);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -93,9 +114,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnMove(InputValue movementValue)
+    private void Update()
     {
-        movementInput = movementValue.Get<Vector2>();
+        movementInput = movement.action.ReadValue<Vector2>();
+        if(attack.action.WasPressedThisFrame())
+        {
+            StartInhale();
+        }
+        if(attack.action.WasReleasedThisFrame())
+        {
+            StartAttack();
+        }
     }
 
     private bool TryMove(Vector2 direction)
@@ -129,6 +158,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+
+
     void StartAttack()
     {
         if (isInhaling)
@@ -145,7 +177,47 @@ public class PlayerController : MonoBehaviour
             
             animator.SetTrigger("water");
             LockMovement();
+            GameObject water = transform.Find("Water").gameObject;
+            if(spriteRenderer.flipX)
+            {
+                water.transform.localPosition = new Vector3(Mathf.Abs(water.transform.localPosition.x) * -1, 0, 0);
+            }
+            else
+            {
+                water.transform.localPosition = new Vector3(Mathf.Abs(water.transform.localPosition.x), 0, 0);
+            }
+            water.SetActive(true);
 
+
+            float mult = 1f;
+            if(spriteRenderer.flipX)
+            {
+                mult = -1f;
+            }
+            RaycastHit2D rh = Physics2D.Raycast(water.transform.position, transform.right * mult, selfCollider.bounds.size.x * 8);
+            if(rh)
+            {
+                Rigidbody2D rb = rh.rigidbody;
+                if(rb)
+                {
+                    GameObject target = rb.gameObject;
+                    if (target.GetComponent<ParticleSystem>())
+                    {
+                        target.SetActive(false);
+                        LocalScore++;
+                        if(LocalScore >= 4  )
+                        {
+                            StateHandler state = StateHandler.GetStateHandler();
+                            if(state)
+                            {
+                                state.Points = localScore;
+                                
+                                state.DisplayAnnouncementAndWarp(true, GameScene.Overworld, true);
+                            }
+                        }
+                    }
+                }
+            }
             StartCoroutine(EndAttackAfterDuration(attackTime));
         }
     }
@@ -157,6 +229,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         animator.SetTrigger("doIdle");
         UnlockMovement();
+        transform.Find("Water").gameObject.SetActive(false);
     }
 
     public void LockMovement()
