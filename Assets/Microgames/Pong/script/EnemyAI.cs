@@ -18,15 +18,26 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
-        currentCoordinates = start;
-        audioSource = GetComponent<AudioSource>();
-        StateHandler.GetStateHandler().Points = 0;
+        currentCoordinates = new Vector2(transform.position.x, transform.position.y);
+        audioSource = transform.parent.GetComponent<AudioSource>();
+        //StateHandler.GetStateHandler().Points = 0; - ask synth before uncommenting <3 - sets total game score instead of local score
     }
 
-    private void OnDestroy()
+    private bool hasDied = false;
+    public void Procreate()
     {
-        GameController.SpawnObject(prefab, new Vector2(12.5f ,Random.Range(0f,3f)));
-        StateHandler.GetStateHandler().Points += 1;
+        //GameController.SpawnObject(gameObject, new Vector2(12.5f ,Random.Range(0f,3f)));
+        if(!hasDied)
+        {
+            GameObject newObj = Instantiate(gameObject, transform.parent);
+            newObj.transform.position = new Vector3(Random.Range(-12.5f, 12.5f), Random.Range(0f, 3f), 0);
+            hasDied = true;
+            StateHandler state = StateHandler.GetStateHandler();
+            if(state)
+            {
+                state.Points++;
+            }
+        }
     }
 
     private void PlaySound()

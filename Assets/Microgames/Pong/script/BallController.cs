@@ -40,6 +40,7 @@ public class BallController : MonoBehaviour
         {
             col.gameObject.GetComponent<EnemyAI>().playExplosion();
             WaitForSeconds wait = new WaitForSeconds(0.5f);
+            col.gameObject.GetComponent<EnemyAI>().Procreate();
             Destroy(col.gameObject);
         }
         else if (col.contacts.Length > 0)

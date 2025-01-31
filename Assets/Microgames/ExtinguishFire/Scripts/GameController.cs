@@ -26,6 +26,14 @@ public class GameController : MonoBehaviour
             SpawnObject(prefab);
             count++;
         }
+        else
+        {
+            StateHandler state = StateHandler.GetStateHandler();
+            if (state)
+            {
+                state.DisplayAnnouncementAndWarp(false, GameScene.Title, false);
+            }
+        }
     }
 
     // Update is called once per frame
