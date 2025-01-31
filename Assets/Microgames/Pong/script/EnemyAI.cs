@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+    private static int enemiesSpawned = 1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Vector2 start = new Vector2(-7, 2.75f);
     public Vector2 end = new Vector2(7, 2.75f);
@@ -27,6 +28,15 @@ public class EnemyAI : MonoBehaviour
     public void Procreate()
     {
         //GameController.SpawnObject(gameObject, new Vector2(12.5f ,Random.Range(0f,3f)));
+        if(enemiesSpawned++ > 5)
+        {
+            StateHandler state = StateHandler.GetStateHandler();
+            if(state)
+            {
+                state.DisplayAnnouncementAndWarp(true, GameScene.Title, false);
+            }
+        }
+        
         if(!hasDied)
         {
             GameObject newObj = Instantiate(gameObject, transform.parent);
