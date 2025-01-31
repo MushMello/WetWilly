@@ -13,16 +13,42 @@ public class EnemyAI : MonoBehaviour
     Vector2 currentCoordinates;
     bool isMovingRight;
 
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip damageSound;
+
     void Start()
     {
         currentCoordinates = start;
-        
+        audioSource = GetComponent<AudioSource>();
+        StateHandler.GetStateHandler().Points = 0;
+    }
+
+    private void OnDestroy()
+    {
+        GameController.SpawnObject(prefab, new Vector2(12.5f ,Random.Range(0f,3f)));
+        StateHandler.GetStateHandler().Points += 1;
+    }
+
+    private void PlaySound()
+    {
+        if (audioSource)
+        {
+            SettingsHandler settings = SettingsHandler.GetSettingsHandler();
+            if (settings)
+                audioSource.volume = settings.MixedEffectVolume;
+            else
+                audioSource.volume = 1.0f;
+
+            audioSource.clip = damageSound;
+            audioSource.Play();
+        }
     }
 
     public void playExplosion()
     {
         ParticleSystem parts = Instantiate(prefab, transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
         float totalDuration = parts.main.duration + parts.main.startLifetimeMultiplier;
+        PlaySound();
         Destroy(parts, totalDuration);
     }
 
