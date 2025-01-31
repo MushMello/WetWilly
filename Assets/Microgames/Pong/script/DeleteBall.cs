@@ -10,7 +10,11 @@ public class DeleteBall : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        Destroy(col.gameObject);
+        if(col.gameObject.GetComponent<BallController>())
+        {
+            col.gameObject.GetComponent<BallController>().SpawnBall();
+            Destroy(col.gameObject);
+        }
     }
 
     // Update is called once per frame

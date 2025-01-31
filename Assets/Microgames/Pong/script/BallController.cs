@@ -59,7 +59,7 @@ public class BallController : MonoBehaviour
         }
     }
 
-    void OnDestroy() {
+    public void SpawnBall() {
         controller.GetComponent<GameController>().BallDestroyed(prefab);
     }
 
